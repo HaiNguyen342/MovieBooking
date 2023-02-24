@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { fetchMovieShowtimesApi } from "../../../../services/cinema";
 
 export default function Showtime() {
@@ -60,7 +60,9 @@ export default function Showtime() {
                     {ele?.lichChieuPhim?.map((ele) => {
                       return (
                         <div key={ele.maLichChieu} className="col-3">
-                          <a href="#">{ele.ngayChieuGioChieu}</a>
+                          <Link to={`/booking/${ele.maLichChieu}`}>
+                            {ele.ngayChieuGioChieu}
+                          </Link>
                         </div>
                       );
                     })}
