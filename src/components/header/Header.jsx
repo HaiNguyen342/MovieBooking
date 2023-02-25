@@ -1,7 +1,9 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const navigate = useNavigate();
+
   return (
     <nav className="navbar navbar-expand-sm navbar-light bg-light">
       <a className="navbar-brand" href="#">
@@ -32,7 +34,12 @@ export default function Header() {
           >
             Register
           </button>
-          <button className="btn btn-outline-success my-2 my-sm-0">
+          <button
+            onClick={() => {
+              navigate("/login");
+            }}
+            className="btn btn-outline-success my-2 my-sm-0"
+          >
             Login
           </button>
         </div>

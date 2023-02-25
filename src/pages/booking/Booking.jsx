@@ -6,6 +6,7 @@ import Seat from "./components/Seat";
 
 export default function Booking() {
   const [ticketDetail, setTicketDetail] = useState({});
+  const [selectedSeatList, setSelectedSeatList] = useState([]);
 
   const params = useParams();
 
@@ -23,11 +24,24 @@ export default function Booking() {
     return ticketDetail?.danhSachGhe?.map((ele, idx) => {
       return (
         <React.Fragment key={ele.maGhe}>
-          <Seat ele={ele} />
+          <Seat ele={ele} handleSelect={handleSelect} />
           {(idx + 1) % 16 === 0 && <br />}
         </React.Fragment>
       );
     });
+  };
+
+  const handleSelect = (seat) => {
+    const data = [...selectedSeatList];
+    const idx = data.findIndex((ele) => ele.maGhe === seat.maGhe);
+
+    if (idx != -1) {
+      data.splice(idx, 1);
+    } else {
+      data.push(seat);
+    }
+
+    setSelectedSeatList(data);
   };
 
   return (
@@ -64,8 +78,13 @@ export default function Booking() {
           <h5 className="mb-0">
             Number of seats:
             <div className="d-flex">
-              <p className="badge badge-success mr-2 mb-0">13</p>
-              <p className="badge badge-success mr-2 mb-0">14</p>
+              {selectedSeatList.map((ele) => {
+                return (
+                  <p key={ele.maGhe} className="badge badge-success mr-2 mb-0">
+                    {ele.tenGhe}
+                  </p>
+                );
+              })}
             </div>
           </h5>
           <h5>Total: 40000</h5>
