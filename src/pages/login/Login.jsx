@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { loginApi } from "../../services/user";
 import { setUserInfoAction } from "../../store/actions/userAction";
 
 export default function Login() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [state, setState] = useState({
@@ -24,8 +26,10 @@ export default function Login() {
     event.preventDefault();
 
     const result = await loginApi(state);
+
     localStorage.setItem("USER_INFO_KEY", JSON.stringify(result.data.content));
     dispatch(setUserInfoAction(result.data.content));
+    navigate("/");
   };
 
   return (

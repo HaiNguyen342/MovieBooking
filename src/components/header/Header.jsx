@@ -1,10 +1,18 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+import { setUserInfoAction } from "../../store/actions/userAction";
 
 export default function Header() {
   const userState = useSelector((state) => state.userReducer);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    localStorage.removeItem("USER_INFO_KEY");
+    dispatch(setUserInfoAction(null));
+    navigate("/");
+  };
 
   return (
     <nav className="navbar navbar-expand-sm navbar-light bg-light">
@@ -33,7 +41,9 @@ export default function Header() {
           {userState.userInfo ? (
             <>
               <span className="mr-3">Hello {userState.userInfo.hoTen}</span>
-              <button className="btn btn-danger">Logout</button>
+              <button className="btn btn-danger" onClick={handleLogout}>
+                Logout
+              </button>
             </>
           ) : (
             <>

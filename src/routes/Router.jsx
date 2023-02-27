@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useRoutes } from "react-router-dom";
+import NoAuthGuard from "../guards/NoAuthGuard";
 import HomeLayout from "../layouts/home/HomeLayout";
 import Booking from "../pages/booking/Booking";
 import HomePage from "../pages/home/HomePage";
@@ -29,8 +30,14 @@ export default function Router() {
         },
 
         {
-          path: "/login",
-          element: <Login />,
+          path: "/",
+          element: <NoAuthGuard />,
+          children: [
+            {
+              path: "/login",
+              element: <Login />,
+            },
+          ],
         },
       ],
     },
