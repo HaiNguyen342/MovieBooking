@@ -1,7 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const userState = useSelector((state) => state.userReducer);
   const navigate = useNavigate();
 
   return (
@@ -28,20 +30,29 @@ export default function Header() {
           </li>
         </ul>
         <div className="ml-auto">
-          <button
-            className="btn btn-outline-info my-2 my-sm-0 mr-2"
-            type="sumit"
-          >
-            Register
-          </button>
-          <button
-            onClick={() => {
-              navigate("/login");
-            }}
-            className="btn btn-outline-success my-2 my-sm-0"
-          >
-            Login
-          </button>
+          {userState.userInfo ? (
+            <>
+              <span className="mr-3">Hello {userState.userInfo.hoTen}</span>
+              <button className="btn btn-danger">Logout</button>
+            </>
+          ) : (
+            <>
+              <button
+                className="btn btn-outline-info my-2 my-sm-0 mr-2"
+                type="sumit"
+              >
+                Register
+              </button>
+              <button
+                onClick={() => {
+                  navigate("/login");
+                }}
+                className="btn btn-outline-success my-2 my-sm-0"
+              >
+                Login
+              </button>
+            </>
+          )}
         </div>
       </div>
     </nav>

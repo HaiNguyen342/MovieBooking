@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { loginApi } from "../../services/user";
+import { setUserInfoAction } from "../../store/actions/userAction";
 
 export default function Login() {
+  const dispatch = useDispatch();
+
   const [state, setState] = useState({
     taiKhoan: "",
     matKhau: "",
@@ -20,6 +24,8 @@ export default function Login() {
     event.preventDefault();
 
     const result = await loginApi(state);
+    localStorage.setItem("USER_INFO_KEY", JSON.stringify(result.data.content));
+    dispatch(setUserInfoAction(result.data.content));
   };
 
   return (
